@@ -40,5 +40,17 @@ namespace MfPulse.Mongo.Operations.Implementations
             };
             return await Collection.FindOneAndReplaceAsync(F.ById(document.Id), document, options);
         }
+        
+        protected async Task<TDocument> UpdateOne(FilterDefinition<TDocument> filter,
+            UpdateDefinition<TDocument> update)
+        {
+            return await Collection.FindOneAndUpdateAsync<TDocument>(filter, update);
+        }
+        
+        protected async Task UpdateMany(FilterDefinition<TDocument> filter,
+            UpdateDefinition<TDocument> update)
+        {
+            await Collection.UpdateManyAsync(filter, update);
+        }
     }
 }

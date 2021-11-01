@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Implementation\Services" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
+    </ItemGroup>
+
+</Project>
