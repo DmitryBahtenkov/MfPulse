@@ -3,15 +3,17 @@ using System.Threading.Tasks;
 using MfPulse.Mongo.Document;
 using MfPulse.Mongo.Extensions;
 using MfPulse.Mongo.Operations.Abstractions;
+using MfPulse.Mongo.Security;
 using MongoDB.Driver;
 
 namespace MfPulse.Mongo.Operations.Implementations
 {
     public class GetOperations<TDocument> : BaseOperations<TDocument>, IGetOperations<TDocument> where TDocument : IDocument
     {
-        public GetOperations(DbContext dbContext) : base(dbContext)
-        { }
-
+        public GetOperations(DbContext dbContext, MongoSecurityFilter mongoSecurityFilter) : base(dbContext, mongoSecurityFilter)
+        {
+        }
+        
         public async Task<List<TDocument>> All(bool isArchived = false)
         {
             return await Many(F.Empty, isArchived);
@@ -35,18 +37,24 @@ namespace MfPulse.Mongo.Operations.Implementations
         protected async Task<TDocument> One(FilterDefinition<TDocument> filter, bool isArchived = false)
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
+            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
+            
             return await (await Collection.FindAsync(filter)).FirstOrDefaultAsync();
         }
         
         protected async Task<List<TDocument>> Many(FilterDefinition<TDocument> filter, bool isArchived = false)
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
+            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
+
             return await (await Collection.FindAsync(filter)).ToListAsync();
         }
         
         protected async Task<long> Count(FilterDefinition<TDocument> filter, bool isArchived = false)
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
+            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
+            
             return await Collection.CountDocumentsAsync(filter);
         }
     }

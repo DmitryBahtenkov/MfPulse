@@ -3,15 +3,16 @@ using MfPulse.Auth.Contract.Database.Models;
 using MfPulse.Auth.Contract.Database.Operations;
 using MfPulse.Mongo.Operations;
 using MfPulse.Mongo.Operations.Implementations;
+using MfPulse.Mongo.Security;
 
 namespace MfPulse.Auth.Implementation.Database
 {
     public class UserGetOperations : GetOperations<UserDocument>, IUserGetOperations
     {
-        public UserGetOperations(DbContext dbContext) : base(dbContext)
+        public UserGetOperations(DbContext dbContext, MongoSecurityFilter mongoSecurityFilter) : base(dbContext, mongoSecurityFilter)
         {
         }
-
+        
         public async Task<UserDocument> ByToken(string token)
         {
             return await One(F.Eq(x => x.CurrentToken, token));
