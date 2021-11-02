@@ -37,25 +37,22 @@ namespace MfPulse.Mongo.Operations.Implementations
         protected async Task<TDocument> One(FilterDefinition<TDocument> filter, bool isArchived = false)
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
-            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
-            
-            return await (await Collection.FindAsync(filter)).FirstOrDefaultAsync();
+
+            return await ExecuteOperation(async x => await (await Collection.FindAsync(x)).FirstOrDefaultAsync(), filter);
         }
         
         protected async Task<List<TDocument>> Many(FilterDefinition<TDocument> filter, bool isArchived = false)
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
-            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
 
-            return await (await Collection.FindAsync(filter)).ToListAsync();
+            return await ExecuteOperation(async x => await (await Collection.FindAsync(filter)).ToListAsync(), filter);
         }
         
         protected async Task<long> Count(FilterDefinition<TDocument> filter, bool isArchived = false)
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
-            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
-            
-            return await Collection.CountDocumentsAsync(filter);
+
+            return await ExecuteOperation(async x =>await Collection.CountDocumentsAsync(filter), filter);
         }
     }
 }
