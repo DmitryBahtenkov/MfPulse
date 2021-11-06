@@ -46,8 +46,9 @@ namespace MfPulse.Mongo.Operations.Implementations
             UpdateDefinition<TDocument> update)
         {
             filter &= _mongoSecurityFilter.GetSecureFilter(filter);
-            
-            return await Collection.FindOneAndUpdateAsync<TDocument>(filter, update);
+
+            await Collection.UpdateOneAsync(filter, update);
+            return await (await Collection.FindAsync(filter)).FirstOrDefaultAsync();
         }
         
         protected async Task UpdateMany(FilterDefinition<TDocument> filter,

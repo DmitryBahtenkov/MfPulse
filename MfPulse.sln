@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Public", "Public", "{68D067
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.Api", "MfPulse.Api\MfPulse.Api.csproj", "{0F01CA9E-A9D7-4ADF-9FF7-4FCE1CAA236B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.CrossCutting", "MfPulse.CrossCutting\MfPulse.CrossCutting.csproj", "{EF935B22-F6BF-4250-9D04-F5647503CF33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBD}") = "MfPulse.CrossCutting", "MfPulse.CrossCutting\MfPulse.CrossCutting.csproj", "{EF935B22-F6BF-4250-9D04-F5647503CF33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

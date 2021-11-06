@@ -6,31 +6,14 @@ namespace MfPulse.Mongo.Security
 {
     public class MongoSecurityFilter
     {
-        private readonly IMongoIdentity _mongoIdentity;
 
-        public MongoSecurityFilter(IMongoIdentity mongoIdentity)
+        public MongoSecurityFilter()
         {
-            _mongoIdentity = mongoIdentity;
         }
 
         public FilterDefinition<TDocument> GetSecureFilter<TDocument>(FilterDefinition<TDocument> filter) where TDocument : IDocument
         {
-            var documentType = typeof(TDocument);
-            var result = filter;
-            
-            var builder = Builders<TDocument>.Filter;
-
-            if (typeof(IDocumentWithUserId).IsAssignableFrom(documentType))
-            {
-                result &= builder.Eq(nameof(IDocumentWithUserId.UserId), _mongoIdentity.UserId);
-            }
-
-            if (typeof(IDocumentWithCompanyId).IsAssignableFrom(documentType))
-            {
-                result &= builder.Eq(nameof(IDocumentWithCompanyId.CompanyId), _mongoIdentity.CompanyId);
-            }
-
-            return result;
+            return FilterDefinition<TDocument>.Empty;
         }
     }
 }

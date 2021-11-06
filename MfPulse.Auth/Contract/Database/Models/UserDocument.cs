@@ -17,5 +17,6 @@ namespace MfPulse.Auth.Contract.Database.Models
         public string CurrentToken { get; set; }
         public string RoleId { get; set; }
         public string CompanyId { get; set; }
+        public string GroupId { get; set; }
     }
 }
