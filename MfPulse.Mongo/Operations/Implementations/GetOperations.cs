@@ -52,7 +52,7 @@ namespace MfPulse.Mongo.Operations.Implementations
         {
             filter &= F.Eq(x => x.IsArchived, isArchived);
 
-            return await ExecuteOperation(async x =>await Collection.CountDocumentsAsync(filter), filter);
+            return await ExecuteOperation(async x =>await Collection.CountDocumentsAsync(x), filter);
         }
     }
 }
