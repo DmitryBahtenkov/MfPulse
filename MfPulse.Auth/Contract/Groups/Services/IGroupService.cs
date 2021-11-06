@@ -7,7 +7,7 @@ namespace MfPulse.Auth.Contract.Groups.Services
     public interface IGroupService
     {
         public Task<GroupResponse> Create(CreateGroupRequest request);
-        public Task<GroupResponse> Update(UpdateGroupRequest request);
+        public Task<GroupResponse> Update(string id, UpdateGroupRequest request);
         public Task Delete(string id);
         public Task<AllGroupsResponse> All();
         public Task<GroupResponse> Get(string id);
