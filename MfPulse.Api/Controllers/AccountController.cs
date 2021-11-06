@@ -8,6 +8,7 @@ namespace MfPulse.Api.Controllers
 {
     [Route("api/v1/account")]
     [ApiController]
+    [ValidateModel]
     public class AccountController : ControllerBase
     {
         private readonly IAuthService _authService;

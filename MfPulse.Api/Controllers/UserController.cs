@@ -13,6 +13,7 @@ namespace MfPulse.Api.Controllers
     [Route("api/v1/user")]
     [ApiController]
     [ForAdmins]
+    [ValidateModel]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
