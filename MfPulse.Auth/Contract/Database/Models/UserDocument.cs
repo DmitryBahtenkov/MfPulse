@@ -3,7 +3,7 @@ using MfPulse.Mongo.Document;
 
 namespace MfPulse.Auth.Contract.Database.Models
 {
-    public record UserDocument : IDocument
+    public record UserDocument : IDocumentWithCompanyId
     {
         public string Id { get; set; }
         public bool IsArchived { get; set; }
@@ -16,5 +16,6 @@ namespace MfPulse.Auth.Contract.Database.Models
         public bool IsNew { get; set; }
         public string CurrentToken { get; set; }
         public string RoleId { get; set; }
+        public string CompanyId { get; set; }
     }
 }
