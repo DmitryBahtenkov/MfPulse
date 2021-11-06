@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using MfPulse.Auth.Contract.Requests;
-using MfPulse.Auth.Contract.Responses;
-using MfPulse.Auth.Contract.Services;
+using MfPulse.Auth.Contract.Users.Requests;
+using MfPulse.Auth.Contract.Users.Responses;
+using MfPulse.Auth.Contract.Users.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfPulse.Api.Controllers

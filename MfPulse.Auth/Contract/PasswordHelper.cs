@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using MfPulse.Auth.Contract.Database.Models;
+using MfPulse.Auth.Contract.Users.Database.Models;
 
 namespace MfPulse.Auth.Contract
 {
