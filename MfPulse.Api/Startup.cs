@@ -1,4 +1,5 @@
 using System;
+using MfPulse.Api.Controllers;
 using MfPulse.Api.Middleware;
 using MfPulse.Auth.Contract.Companies.Operations;
 using MfPulse.Auth.Contract.Companies.Services;
@@ -38,16 +39,11 @@ namespace MfPulse.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
-            
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            
+
             services.AddMvc(options => options.Filters.Add<ValidateModelAttribute>());
             
             services.AddControllers();
@@ -70,7 +66,7 @@ services.Configure<ApiBehaviorOptions>(options =>
             
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "FBA", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Mf Pulse", Version = "v1"});
                 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
                     In = ParameterLocation.Header, 
@@ -95,12 +91,15 @@ services.Configure<ApiBehaviorOptions>(options =>
             });
 
             services.AddLogging();
+            services.AddHttpContextAccessor();
 
             services.AddScoped<DbContext>();
+            services.AddScoped<MongoSecurityFilter>();
+
             services.AddScoped<IUserGetOperations, UserGetOperations>();
             services.AddScoped<IUserWriteOperations, UserWriteOperations>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<MongoSecurityFilter>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<ICompanyGetOperations, CompanyGetOperations>();
             services.AddScoped<ICompanyWriteOperations, CompanyWriteOperations>();
@@ -109,10 +108,9 @@ services.Configure<ApiBehaviorOptions>(options =>
             services.AddScoped<IGroupGetOperations, GroupGetOperations>();
             services.AddScoped<IGroupWriteOperations, GroupWriteOperations>();
             services.AddScoped<IGroupService, GroupService>();
-            services.AddScoped<IUserService, UserService>();
+
             
             services.AddTransient<IUserIdentity, UserIdentity>();
-            services.AddHttpContextAccessor();
             services.AddTransient<IMongoIdentity, UserIdentity>();
         }
 

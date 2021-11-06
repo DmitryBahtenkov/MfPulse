@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MfPulse.Api.Attributes;
+using MfPulse.Auth.Contract.Users.Database.Operations;
 using MfPulse.Auth.Contract.Users.Requests;
 using MfPulse.Auth.Contract.Users.Responses;
 using MfPulse.Auth.Contract.Users.Services;
@@ -20,12 +21,12 @@ namespace MfPulse.Api.Controllers
         {
             _userService = userService;
         }
-
-        [HttpPost("api/v1/user")]
+        
+        [HttpPost]
         public async Task<UserResponse> Create([FromBody] CreateUserRequest request)
             => await _userService.Create(request);
         
-        [HttpPut("api/v1/user/{id}")]
+        [HttpPut("{id}")]
         public async Task<UserResponse> Update(string id, [FromBody] UpdateUserRequest request)
             => await _userService.Update(id, request);
     }

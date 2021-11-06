@@ -55,7 +55,7 @@ namespace MfPulse.Auth.Implementation.Users.Services
                 throw new BusinessException("Не найден пользователь");
             }
 
-            if (PasswordHelper.ComparePassword(user, request.Password))
+            if (!PasswordHelper.ComparePassword(user, request.Password))
             {
                 throw new BusinessException("Некорректный логин или пароль");
             }

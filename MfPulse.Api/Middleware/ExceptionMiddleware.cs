@@ -25,6 +25,14 @@ namespace MfPulse.Api.Middleware
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsJsonAsync(new {Message = ex.Message});
             }
+            catch (NotFoundException)
+            {
+                context.Response.StatusCode = 404;
+            }
+            catch (ForbiddenException)
+            {
+                context.Response.StatusCode = 403;
+            }
             catch(Exception exception)
             {
                 context.Response.StatusCode = 500;
