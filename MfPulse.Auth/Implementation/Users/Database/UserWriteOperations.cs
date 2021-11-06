@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MfPulse.Auth.Contract.Users.Database.Models;
 using MfPulse.Auth.Contract.Users.Database.Operations;
+using MfPulse.Mongo.Extensions;
 using MfPulse.Mongo.Operations;
 using MfPulse.Mongo.Operations.Implementations;
 using MfPulse.Mongo.Security;
