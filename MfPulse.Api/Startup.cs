@@ -114,6 +114,8 @@ services.Configure<ApiBehaviorOptions>(options =>
             services.AddScoped<IGroupGetOperations, GroupGetOperations>();
             services.AddScoped<IGroupWriteOperations, GroupWriteOperations>();
             services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IUserService, UserService>();
+            
             services.AddTransient<IUserIdentity, UserIdentity>();
             services.AddHttpContextAccessor();
             services.AddTransient<IMongoIdentity, UserIdentity>();

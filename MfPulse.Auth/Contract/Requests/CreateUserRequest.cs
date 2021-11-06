@@ -1,6 +1,6 @@
 ﻿namespace MfPulse.Auth.Contract.Requests
 {
-    public record CreateUserRequest()
+    public record CreateUserRequest
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -9,5 +9,6 @@
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string RoleId { get; set; }
+        public string GroupId { get; set; }
     }
 }
