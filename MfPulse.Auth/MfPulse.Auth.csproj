@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MfPulse.CrossCutting\MfPulse.CrossCutting.csproj" />
       <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
     </ItemGroup>
 
