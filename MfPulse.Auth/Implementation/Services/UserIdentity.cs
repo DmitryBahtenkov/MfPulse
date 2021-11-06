@@ -1,26 +1,26 @@
 ﻿using MfPulse.Auth.Contract.Database.Models;
 using MfPulse.Auth.Contract.Database.Operations;
+using MfPulse.Auth.Contract.Rights;
 using MfPulse.Auth.Contract.Services;
+using MfPulse.Auth.Implementation.Extensions;
 using Microsoft.AspNetCore.Http;
 
 namespace MfPulse.Auth.Implementation.Services
 {
     public class UserIdentity : IUserIdentity
     {
-        public string UserId => User?.Id;
-        public string CompanyId => User?.CompanyId;
+        public string UserId => _httpContextAccessor.HttpContext?.User?.GetClaim(Claims.UserId);
+        public string CompanyId => _httpContextAccessor.HttpContext?.User?.GetClaim(Claims.Company);
 
-        public UserDocument User => _userGetOperations
-            .ByLogin(_httpContextAccessor?.HttpContext?.User?.Identity?.Name)
-            .ConfigureAwait(false).GetAwaiter().GetResult();
+        
 
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IUserGetOperations _userGetOperations;
 
-        public UserIdentity(IHttpContextAccessor httpContextAccessor, IUserGetOperations userGetOperations)
+        public UserIdentity(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _userGetOperations = userGetOperations;
         }
+
+        public string GroupId => _httpContextAccessor.HttpContext?.User?.GetClaim(Claims.Group);
     }
 }

@@ -8,6 +8,7 @@ using MfPulse.Auth.Contract.Database.Models;
 using MfPulse.Auth.Contract.Database.Operations;
 using MfPulse.Auth.Contract.Requests;
 using MfPulse.Auth.Contract.Responses;
+using MfPulse.Auth.Contract.Rights;
 using MfPulse.Auth.Contract.Services;
 using MfPulse.CrossCutting.Exceptions;
 using Microsoft.IdentityModel.Tokens;
@@ -94,7 +95,10 @@ namespace MfPulse.Auth.Implementation.Services
             var claims = new List<Claim>
             {
                 new (ClaimsIdentity.DefaultNameClaimType, userDocument.Login),
-                new (ClaimsIdentity.DefaultRoleClaimType, userDocument.RoleId)
+                new (ClaimsIdentity.DefaultRoleClaimType, userDocument.RoleId),
+                new (Claims.Company, userDocument.CompanyId),
+                new (Claims.Group, userDocument.GroupId),
+                new (Claims.UserId, userDocument.Id)
             };
             
             ClaimsIdentity claimsIdentity =

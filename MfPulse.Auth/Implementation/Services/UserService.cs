@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MfPulse.Auth.Contract;
 using MfPulse.Auth.Contract.Database.Models;
 using MfPulse.Auth.Contract.Database.Operations;
+using MfPulse.Auth.Contract.Groups.Operations;
 using MfPulse.Auth.Contract.Requests;
 using MfPulse.Auth.Contract.Responses;
 using MfPulse.Auth.Contract.Rights;
@@ -16,11 +17,13 @@ namespace MfPulse.Auth.Implementation.Services
     {
         private readonly IUserGetOperations _userGetOperations;
         private readonly IUserWriteOperations _userWriteOperations;
+        private readonly IGroupGetOperations _groupGetOperations;
 
-        public UserService(IUserGetOperations userGetOperations, IUserWriteOperations userWriteOperations)
+        public UserService(IUserGetOperations userGetOperations, IUserWriteOperations userWriteOperations, IGroupGetOperations groupGetOperations)
         {
             _userGetOperations = userGetOperations;
             _userWriteOperations = userWriteOperations;
+            _groupGetOperations = groupGetOperations;
         }
 
         public async Task<UserResponse> Create(CreateUserRequest request)
@@ -50,6 +53,11 @@ namespace MfPulse.Auth.Implementation.Services
             if (!RoleTags.GetAll().Contains(request.RoleId))
             {
                 throw new BusinessException("Такой роли не существует");
+            }
+
+            if (!await _groupGetOperations.ExistById(request.GroupId))
+            {
+                throw new BusinessException("Такой группы не существует");
             }
             
             var user = await _userGetOperations.ByLogin(request.Login);

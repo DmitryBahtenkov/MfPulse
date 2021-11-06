@@ -34,7 +34,7 @@ namespace MfPulse.Auth.Implementation.Groups.Services
             {
                 Name = request.Name,
                 ResponsibleId = request.ResponsibleId,
-                CompanyId = _userIdentity.User.CompanyId
+                CompanyId = _userIdentity.CompanyId
             });
 
             return new()

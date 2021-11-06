@@ -7,6 +7,6 @@ namespace MfPulse.Auth.Contract.Services
 {
     public interface IUserIdentity : IMongoIdentity
     {
-        public UserDocument User { get; }
+        public string GroupId { get; }
     }
 }
