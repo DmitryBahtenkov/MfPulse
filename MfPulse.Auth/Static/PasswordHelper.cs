@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MfPulse.Auth.Contract.Users.Database.Models;
 
-namespace MfPulse.Auth.Contract
+namespace MfPulse.Auth.Static
 {
     public class PasswordHelper
     {

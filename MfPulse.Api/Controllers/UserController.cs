@@ -2,6 +2,7 @@
 using MfPulse.Auth.Contract.Users.Requests;
 using MfPulse.Auth.Contract.Users.Responses;
 using MfPulse.Auth.Contract.Users.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MfPulse.Api.Controllers

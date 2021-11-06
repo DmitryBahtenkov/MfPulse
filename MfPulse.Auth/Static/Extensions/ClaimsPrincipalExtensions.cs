@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 
-namespace MfPulse.Auth.Extensions
+namespace MfPulse.Auth.Static.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

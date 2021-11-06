@@ -1,31 +1,27 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MfPulse.Auth.Contract;
+using MfPulse.Api.Middleware;
+using MfPulse.Auth.Contract.Companies.Operations;
+using MfPulse.Auth.Contract.Companies.Services;
 using MfPulse.Auth.Contract.Groups.Operations;
 using MfPulse.Auth.Contract.Groups.Services;
 using MfPulse.Auth.Contract.Users.Database.Operations;
 using MfPulse.Auth.Contract.Users.Services;
+using MfPulse.Auth.Implementation.Companies.Operations;
+using MfPulse.Auth.Implementation.Companies.Services;
 using MfPulse.Auth.Implementation.Groups.Operations;
 using MfPulse.Auth.Implementation.Groups.Services;
 using MfPulse.Auth.Implementation.Users.Database;
 using MfPulse.Auth.Implementation.Users.Services;
-using MfPulse.Company.Contract.Operations;
-using MfPulse.Company.Contract.Services;
-using MfPulse.Company.Impl.Operations;
-using MfPulse.Company.Impl.Services;
+using MfPulse.Auth.Static;
 using MfPulse.Mongo.Operations;
 using MfPulse.Mongo.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -40,7 +36,6 @@ namespace MfPulse.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 services.Configure<ApiBehaviorOptions>(options =>
@@ -121,7 +116,6 @@ services.Configure<ApiBehaviorOptions>(options =>
             services.AddTransient<IMongoIdentity, UserIdentity>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -131,9 +125,18 @@ services.Configure<ApiBehaviorOptions>(options =>
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MfPulse.Api v1"));
             }
             
+            app.UseMiddleware<ExceptionMiddleware>();
+            
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(_ => true)
+                .AllowCredentials()); 
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

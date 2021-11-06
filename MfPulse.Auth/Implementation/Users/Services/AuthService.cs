@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using MfPulse.Auth.Contract;
 using MfPulse.Auth.Contract.Users.Database.Models;
 using MfPulse.Auth.Contract.Users.Database.Operations;
 using MfPulse.Auth.Contract.Users.Requests;
 using MfPulse.Auth.Contract.Users.Responses;
 using MfPulse.Auth.Contract.Users.Services;
-using MfPulse.Auth.Rights;
+using MfPulse.Auth.Static;
+using MfPulse.Auth.Static.Rights;
 using MfPulse.CrossCutting.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 

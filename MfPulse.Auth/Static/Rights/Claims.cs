@@ -1,4 +1,4 @@
-﻿namespace MfPulse.Auth.Rights
+﻿namespace MfPulse.Auth.Static.Rights
 {
     public static class Claims
     {

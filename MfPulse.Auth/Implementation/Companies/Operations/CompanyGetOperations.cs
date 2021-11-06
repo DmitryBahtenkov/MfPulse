@@ -1,10 +1,10 @@
-﻿using MfPulse.Company.Contract.Models;
-using MfPulse.Company.Contract.Operations;
+﻿using MfPulse.Auth.Contract.Companies.Models;
+using MfPulse.Auth.Contract.Companies.Operations;
 using MfPulse.Mongo.Operations;
 using MfPulse.Mongo.Operations.Implementations;
 using MfPulse.Mongo.Security;
 
-namespace MfPulse.Company.Impl.Operations
+namespace MfPulse.Auth.Implementation.Companies.Operations
 {
     public class CompanyGetOperations : GetOperations<CompanyDocument>, ICompanyGetOperations
     {

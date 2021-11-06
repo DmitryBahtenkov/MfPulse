@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using MfPulse.Company.Contract.Models.Requests;
-using MfPulse.Company.Contract.Models.Responses;
+using MfPulse.Auth.Contract.Companies.Models.Requests;
+using MfPulse.Auth.Contract.Companies.Models.Responses;
 
-namespace MfPulse.Company.Contract.Services
+namespace MfPulse.Auth.Contract.Companies.Services
 {
     public interface ICompanyService
     {

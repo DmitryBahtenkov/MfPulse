@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using MfPulse.Company.Contract.Models;
-using MfPulse.Company.Contract.Models.Requests;
-using MfPulse.Company.Contract.Models.Responses;
-using MfPulse.Company.Contract.Operations;
-using MfPulse.Company.Contract.Services;
+using MfPulse.Auth.Contract.Companies.Models;
+using MfPulse.Auth.Contract.Companies.Models.Requests;
+using MfPulse.Auth.Contract.Companies.Models.Responses;
+using MfPulse.Auth.Contract.Companies.Operations;
+using MfPulse.Auth.Contract.Companies.Services;
 using MfPulse.Mongo.Helpers;
 
-namespace MfPulse.Company.Impl.Services
+namespace MfPulse.Auth.Implementation.Companies.Services
 {
     public class CompanyService : ICompanyService
     {

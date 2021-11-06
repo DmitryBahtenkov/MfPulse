@@ -16,7 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Contract\Companies" />
       <Folder Include="Contract\Users" />
+      <Folder Include="Implementation\Companies" />
       <Folder Include="Implementation\Users" />
     </ItemGroup>
 

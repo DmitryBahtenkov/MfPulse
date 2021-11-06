@@ -1,7 +1,7 @@
 ﻿using System;
 using MfPulse.Mongo.Document;
 
-namespace MfPulse.Company.Contract.Models
+namespace MfPulse.Auth.Contract.Companies.Models
 {
     public record CompanyDocument : IDocument
     {

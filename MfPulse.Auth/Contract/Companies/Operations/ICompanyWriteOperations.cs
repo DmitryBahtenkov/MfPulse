@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using MfPulse.Company.Contract.Models;
+using MfPulse.Auth.Contract.Companies.Models;
 using MfPulse.Mongo.Operations.Abstractions;
 
-namespace MfPulse.Company.Contract.Operations
+namespace MfPulse.Auth.Contract.Companies.Operations
 {
     public interface ICompanyWriteOperations : IWriteOperations<CompanyDocument>
     {

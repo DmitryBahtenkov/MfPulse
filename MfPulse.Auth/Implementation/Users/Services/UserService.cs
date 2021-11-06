@@ -1,13 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MfPulse.Auth.Contract;
+using MfPulse.Auth.Contract.Companies.Operations;
+using MfPulse.Auth.Contract.Companies.Services;
 using MfPulse.Auth.Contract.Groups.Operations;
 using MfPulse.Auth.Contract.Users.Database.Models;
 using MfPulse.Auth.Contract.Users.Database.Operations;
 using MfPulse.Auth.Contract.Users.Requests;
 using MfPulse.Auth.Contract.Users.Responses;
 using MfPulse.Auth.Contract.Users.Services;
-using MfPulse.Auth.Rights;
+using MfPulse.Auth.Static;
+using MfPulse.Auth.Static.Rights;
 using MfPulse.CrossCutting.Exceptions;
 using MfPulse.Mongo.Helpers;
 
@@ -18,12 +21,16 @@ namespace MfPulse.Auth.Implementation.Users.Services
         private readonly IUserGetOperations _userGetOperations;
         private readonly IUserWriteOperations _userWriteOperations;
         private readonly IGroupGetOperations _groupGetOperations;
+        private readonly IUserIdentity _userIdentity;
 
-        public UserService(IUserGetOperations userGetOperations, IUserWriteOperations userWriteOperations, IGroupGetOperations groupGetOperations)
+        public UserService(IUserGetOperations userGetOperations,
+            IUserWriteOperations userWriteOperations,
+            IGroupGetOperations groupGetOperations, IUserIdentity userIdentity)
         {
             _userGetOperations = userGetOperations;
             _userWriteOperations = userWriteOperations;
             _groupGetOperations = groupGetOperations;
+            _userIdentity = userIdentity;
         }
 
         public async Task<UserResponse> Create(CreateUserRequest request)
@@ -41,7 +48,8 @@ namespace MfPulse.Auth.Implementation.Users.Services
                 MiddleName = request.MiddleName,
                 RoleId = request.RoleId,
                 Password = password,
-                GroupId = request.GroupId
+                GroupId = request.GroupId,
+                CompanyId = _userIdentity.CompanyId
             };
 
             var user = await _userWriteOperations.Insert(doc);

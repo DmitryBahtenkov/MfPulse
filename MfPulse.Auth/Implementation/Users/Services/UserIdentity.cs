@@ -1,6 +1,6 @@
 ﻿using MfPulse.Auth.Contract.Users.Services;
-using MfPulse.Auth.Extensions;
-using MfPulse.Auth.Rights;
+using MfPulse.Auth.Static.Extensions;
+using MfPulse.Auth.Static.Rights;
 using Microsoft.AspNetCore.Http;
 
 namespace MfPulse.Auth.Implementation.Users.Services

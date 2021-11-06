@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MfPulse.Company.Contract.Models.Requests
+namespace MfPulse.Auth.Contract.Companies.Models.Requests
 {
     public record ChangeCompanyRequest
     {

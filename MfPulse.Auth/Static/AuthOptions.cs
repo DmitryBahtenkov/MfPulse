@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MfPulse.Auth.Contract
+namespace MfPulse.Auth.Static
 {
     public static class AuthOptions
     {

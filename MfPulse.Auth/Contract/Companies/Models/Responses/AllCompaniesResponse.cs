@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MfPulse.Company.Contract.Models.Responses
+namespace MfPulse.Auth.Contract.Companies.Models.Responses
 {
     public record AllCompaniesResponse
     {
