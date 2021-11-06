@@ -16,12 +16,12 @@ namespace MfPulse.Auth.Implementation.Users.Database
         
         public async Task<UserDocument> UpdateToken(string id, string newToken)
         {
-            return await UpdateOne(GetIdFilter(id), U.Set(x => x.CurrentToken, newToken));
+            return await UpdateOne(F.ById(id), U.Set(x => x.CurrentToken, newToken));
         }
 
         public async Task<UserDocument> ClearToken(string id)
         {
-            return await UpdateOne(GetIdFilter(id), U.Set(x => x.CurrentToken, null));
+            return await UpdateOne(F.ById(id), U.Set(x => x.CurrentToken, null));
         }
 
         public async Task<UserDocument> UpdateInfo(string id, string lastName, string firstName, string middleName)
@@ -31,12 +31,12 @@ namespace MfPulse.Auth.Implementation.Users.Database
                 .Set(x=>x.FirstName, firstName)
                 .Set(x=>x.MiddleName, middleName);
 
-            return await UpdateOne(GetIdFilter(id), update);
+            return await UpdateOne(F.ById(id), update);
         }
 
         public async Task<UserDocument> UpdatePassword(string id, Password newPassword)
         {
-            return await UpdateOne(GetIdFilter(id), U.Set(x => x.Password, newPassword));
+            return await UpdateOne(F.ById(id), U.Set(x => x.Password, newPassword));
         }
     }
 }

@@ -23,13 +23,19 @@ namespace MfPulse.Mongo.Operations.Implementations
 
         public async Task<TDocument> Delete(TDocument document)
         {
-            return await Collection.FindOneAndDeleteAsync<TDocument>(GetIdFilter(document.Id));
+            return await ExecuteOperation(
+                async x => await Collection.FindOneAndDeleteAsync<TDocument>(x),
+                F.ById(document.Id)
+                );
         }
 
         public async Task<TDocument> SafeDelete(TDocument document)
         {
             var update = U.Set(x => x.IsArchived, true);
-            return await Collection.FindOneAndUpdateAsync<TDocument>(GetIdFilter(document.Id), update);
+            return await ExecuteOperation(
+                async x => await Collection.FindOneAndUpdateAsync<TDocument>(x, update),
+                F.ById(document.Id)
+            );
         }
 
         public async Task<TDocument> Upsert(TDocument document)
@@ -39,29 +45,31 @@ namespace MfPulse.Mongo.Operations.Implementations
             {
                 IsUpsert = true
             };
-            return await Collection.FindOneAndReplaceAsync(GetIdFilter(document.Id), document, options);
+            return await ExecuteOperation(
+                async x => await Collection.FindOneAndReplaceAsync(x, document, options),
+                F.ById(document.Id)
+            );
         }
         
         protected async Task<TDocument> UpdateOne(FilterDefinition<TDocument> filter,
             UpdateDefinition<TDocument> update)
         {
-            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
-
-            await Collection.UpdateOneAsync(filter, update);
-            return await (await Collection.FindAsync(filter)).FirstOrDefaultAsync();
+            return await ExecuteOperation(
+                async x =>
+                {
+                    await Collection.UpdateOneAsync(filter, update);
+                    return await (await Collection.FindAsync(filter)).FirstOrDefaultAsync();
+                },
+                filter);
         }
         
         protected async Task UpdateMany(FilterDefinition<TDocument> filter,
             UpdateDefinition<TDocument> update)
         {
-            filter &= _mongoSecurityFilter.GetSecureFilter(filter);
-
-            await Collection.UpdateManyAsync(filter, update);
-        }
-
-        protected FilterDefinition<TDocument> GetIdFilter(string id)
-        {
-            return _mongoSecurityFilter.GetSecureFilter(F.ById(id));
+            await ExecuteOperation(
+                async x => await Collection.UpdateManyAsync(x, update),
+                filter);
+            
         }
     }
 }

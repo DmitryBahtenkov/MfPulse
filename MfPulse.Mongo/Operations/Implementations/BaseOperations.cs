@@ -1,4 +1,6 @@
-﻿using MfPulse.Mongo.Document;
+﻿using System;
+using System.Threading.Tasks;
+using MfPulse.Mongo.Document;
 using MfPulse.Mongo.Security;
 using MongoDB.Driver;
 
@@ -16,6 +18,21 @@ namespace MfPulse.Mongo.Operations.Implementations
         {
             _mongoSecurityFilter = mongoSecurityFilter;
             Collection = dbContext.Database.GetCollection<TDocument>(typeof(TDocument).Name.Replace("Document", ""));
+        }
+
+        /// <summary>
+        /// Метод выполнения некой операции в монго с применением фильтров.
+        /// Применяет все SecureFilters для фильтра в операции 
+        /// </summary>
+        /// <param name="operation">Функция, которую необходимо выполнить</param>
+        /// <param name="filterDefinition">Фильтр, который необходимо обогатить и передать в функцию</param>
+        /// <typeparam name="TResult">Тип результата, который вернёт функция</typeparam>
+        /// <returns>Указанный результат в TResult</returns>
+        protected async Task<TResult> ExecuteOperation<TResult>(Func<FilterDefinition<TDocument>, Task<TResult>> operation, FilterDefinition<TDocument> filterDefinition)
+        {
+            filterDefinition &= _mongoSecurityFilter.GetSecureFilter(filterDefinition);
+            
+            return await operation(filterDefinition);
         }
     }
 }
