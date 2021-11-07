@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FBA.EventBus.Events
+namespace MfPulse.EventBus.Events
 {
     public abstract class EventBase
     {

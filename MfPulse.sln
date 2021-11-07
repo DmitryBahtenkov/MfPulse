@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.Mongo", "MfPulse.Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.Auth", "MfPulse.Auth\MfPulse.Auth.csproj", "{B5C7CA8B-4F59-4685-AFFD-6BDEBCEEB6CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBA.EventBus", "FBA.EventBus\FBA.EventBus.csproj", "{C993CB97-5F48-48C7-9149-42457A0434EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.EventBus", "MfPulse.EventBus\MfPulse.EventBus.csproj", "{C993CB97-5F48-48C7-9149-42457A0434EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FBA.EventBus.Events;
+using MfPulse.EventBus.Events;
 using MfPulse.Mongo.Document;
 
-namespace FBA.EventBus
+namespace MfPulse.EventBus
 {
     public class EventStorage<TDocument> where TDocument : IDocument
     {
         public event Func<DocumentCreatedEvent<TDocument>, Task> DocumentChangedEvent;
         public event Func<DocumentDeletedEvent<TDocument>, Task> DocumentDeletedEvent;
 
-        internal virtual async Task OnDocumentChangedEvent(DocumentCreatedEvent<TDocument> arg)
+        internal virtual async Task OnDocumentCreatedEvent(DocumentCreatedEvent<TDocument> arg)
         {
             if (DocumentChangedEvent is not null)
             {

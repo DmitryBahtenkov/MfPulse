@@ -1,7 +1,7 @@
 ﻿using System;
 using MfPulse.Mongo.Document;
 
-namespace FBA.EventBus.Events
+namespace MfPulse.EventBus.Events
 {
     public class DocumentDeletedEvent<TDocument> : EventBase where TDocument : IDocument
     {

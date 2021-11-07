@@ -1,4 +1,4 @@
-﻿namespace FBA.EventBus
+﻿namespace MfPulse.EventBus
 {
     public interface IEventBuilder
     {

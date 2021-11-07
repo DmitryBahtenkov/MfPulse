@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using FBA.EventBus.Events;
+using MfPulse.EventBus.Events;
 using MfPulse.Mongo.Document;
 
-namespace FBA.EventBus
+namespace MfPulse.EventBus
 {
     public class EventInvoker<TDocument> where TDocument : IDocument
     {
@@ -13,9 +13,9 @@ namespace FBA.EventBus
             _eventStorage = eventStorage;
         }
 
-        public async Task OnDocumentChanged(DocumentCreatedEvent<TDocument> eventArgs)
+        public async Task OnDocumentCreated(DocumentCreatedEvent<TDocument> eventArgs)
         {
-            await _eventStorage.OnDocumentChangedEvent(eventArgs);
+            await _eventStorage.OnDocumentCreatedEvent(eventArgs);
         }
 
         public async Task OnDocumentDeleted(DocumentDeletedEvent<TDocument> eventArgs)
