@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.Api", "MfPulse.Api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.CrossCutting", "MfPulse.CrossCutting\MfPulse.CrossCutting.csproj", "{EF935B22-F6BF-4250-9D04-F5647503CF33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MfPulse.EventBus", "MfPulse.EventBus\MfPulse.EventBus.csproj", "{C993CB97-5F48-48C7-9149-42457A0434EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{7CA4D127-05F6-433A-A4FF-B476955AA640} = {860FA9AD-0A96-4533-81BA-C87C3E6192B3}
 		{0F01CA9E-A9D7-4ADF-9FF7-4FCE1CAA236B} = {68D0675A-C27A-4A9B-92AD-36645A6CDE5E}
 		{EF935B22-F6BF-4250-9D04-F5647503CF33} = {860FA9AD-0A96-4533-81BA-C87C3E6192B3}
+		{C993CB97-5F48-48C7-9149-42457A0434EE} = {860FA9AD-0A96-4533-81BA-C87C3E6192B3}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C39D718F-2342-46F8-A830-76CFEC75414A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,5 +50,9 @@ Global
 		{EF935B22-F6BF-4250-9D04-F5647503CF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF935B22-F6BF-4250-9D04-F5647503CF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF935B22-F6BF-4250-9D04-F5647503CF33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C993CB97-5F48-48C7-9149-42457A0434EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C993CB97-5F48-48C7-9149-42457A0434EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C993CB97-5F48-48C7-9149-42457A0434EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C993CB97-5F48-48C7-9149-42457A0434EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
