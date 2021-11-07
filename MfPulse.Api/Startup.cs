@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using MfPulse.EventBus;
 using MfPulse.Api.Controllers;
 using MfPulse.Api.Middleware;
+using MfPulse.Assessment.Contract.Criterions.Operations;
+using MfPulse.Assessment.Contract.Criterions.Services;
+using MfPulse.Assessment.Implementations.Criterions.Operations;
+using MfPulse.Assessment.Implementations.Criterions.Services;
 using MfPulse.Auth.Contract.Companies.Operations;
 using MfPulse.Auth.Contract.Companies.Services;
 using MfPulse.Auth.Contract.Groups.Operations;
@@ -114,6 +118,10 @@ namespace MfPulse.Api
             services.AddScoped<IGroupGetOperations, GroupGetOperations>();
             services.AddScoped<IGroupWriteOperations, GroupWriteOperations>();
             services.AddScoped<IGroupService, GroupService>();
+
+            services.AddScoped<ICriterionGetOperations, CriterionGetOperations>();
+            services.AddScoped<ICriterionWriteOperations, CriterionWriteOperations>();
+            services.AddScoped<ICriterionService, CriterionService>();
 
             
             services.AddTransient<IUserIdentity, UserIdentity>();
