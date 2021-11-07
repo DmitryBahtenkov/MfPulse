@@ -15,4 +15,8 @@
       <Folder Include="Controllers" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MfPulse.EventBus\MfPulse.EventBus.csproj" />
+    </ItemGroup>
+
 </Project>

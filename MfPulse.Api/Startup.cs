@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MfPulse.EventBus;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -85,6 +86,8 @@ services.Configure<ApiBehaviorOptions>(options =>
             });
 
             services.AddLogging();
+            services.AddSingleton(typeof(EventStorage<>));
+            services.AddSingleton(typeof(EventInvoker<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
