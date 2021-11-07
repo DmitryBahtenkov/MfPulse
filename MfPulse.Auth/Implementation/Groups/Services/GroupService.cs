@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using MfPulse.Auth.Contract.Database.Operations;
 using MfPulse.Auth.Contract.Groups.Models;
 using MfPulse.Auth.Contract.Groups.Models.Requests;
 using MfPulse.Auth.Contract.Groups.Models.Responses;
 using MfPulse.Auth.Contract.Groups.Operations;
 using MfPulse.Auth.Contract.Groups.Services;
-using MfPulse.Auth.Contract.Services;
+using MfPulse.Auth.Contract.Users.Database.Operations;
+using MfPulse.Auth.Contract.Users.Services;
 using MfPulse.CrossCutting.Exceptions;
 
 namespace MfPulse.Auth.Implementation.Groups.Services
@@ -34,7 +34,7 @@ namespace MfPulse.Auth.Implementation.Groups.Services
             {
                 Name = request.Name,
                 ResponsibleId = request.ResponsibleId,
-                CompanyId = _userIdentity.User.CompanyId
+                CompanyId = _userIdentity.CompanyId
             });
 
             return new()

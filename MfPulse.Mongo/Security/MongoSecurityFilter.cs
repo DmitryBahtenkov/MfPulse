@@ -20,12 +20,12 @@ namespace MfPulse.Mongo.Security
             
             var builder = Builders<TDocument>.Filter;
 
-            if (typeof(IDocumentWithUserId).IsAssignableFrom(documentType))
+            if (typeof(IDocumentWithUserId).IsAssignableFrom(documentType) && !string.IsNullOrEmpty(_mongoIdentity.UserId))
             {
                 result &= builder.Eq(nameof(IDocumentWithUserId.UserId), _mongoIdentity.UserId);
             }
 
-            if (typeof(IDocumentWithCompanyId).IsAssignableFrom(documentType))
+            if (typeof(IDocumentWithCompanyId).IsAssignableFrom(documentType) && !string.IsNullOrEmpty(_mongoIdentity.CompanyId))
             {
                 result &= builder.Eq(nameof(IDocumentWithCompanyId.CompanyId), _mongoIdentity.CompanyId);
             }

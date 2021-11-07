@@ -3,15 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MfPulse.EventBus;
+using MfPulse.Api.Controllers;
+using MfPulse.Api.Middleware;
+using MfPulse.Auth.Contract.Companies.Operations;
+using MfPulse.Auth.Contract.Companies.Services;
+using MfPulse.Auth.Contract.Groups.Operations;
+using MfPulse.Auth.Contract.Groups.Services;
+using MfPulse.Auth.Contract.Users.Database.Operations;
+using MfPulse.Auth.Contract.Users.Services;
+using MfPulse.Auth.Implementation.Companies.Operations;
+using MfPulse.Auth.Implementation.Companies.Services;
+using MfPulse.Auth.Implementation.Groups.Operations;
+using MfPulse.Auth.Implementation.Groups.Services;
+using MfPulse.Auth.Implementation.Users.Database;
+using MfPulse.Auth.Implementation.Users.Services;
+using MfPulse.Auth.Static;
+using MfPulse.Mongo.Operations;
+using MfPulse.Mongo.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -26,20 +41,14 @@ namespace MfPulse.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
-            
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            
-            //services.AddMvc(options => options.Filters.Add<ValidateModelAttribute>());
+
+            services.AddMvc(options => options.Filters.Add<ValidateModelAttribute>());
             
             services.AddControllers();
             
@@ -47,7 +56,7 @@ services.Configure<ApiBehaviorOptions>(options =>
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
-                    /*options.TokenValidationParameters = new TokenValidationParameters
+                    options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidIssuer = AuthOptions.Issuer,
@@ -56,12 +65,12 @@ services.Configure<ApiBehaviorOptions>(options =>
                         ValidateLifetime = true,
                         IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
                         ValidateIssuerSigningKey = true,
-                    };*/
+                    };
                 });
             
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "FBA", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Mf Pulse", Version = "v1"});
                 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
                     In = ParameterLocation.Header, 
@@ -88,9 +97,29 @@ services.Configure<ApiBehaviorOptions>(options =>
             services.AddLogging();
             services.AddSingleton(typeof(EventStorage<>));
             services.AddSingleton(typeof(EventInvoker<>));
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<DbContext>();
+            services.AddScoped<MongoSecurityFilter>();
+
+            services.AddScoped<IUserGetOperations, UserGetOperations>();
+            services.AddScoped<IUserWriteOperations, UserWriteOperations>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<ICompanyGetOperations, CompanyGetOperations>();
+            services.AddScoped<ICompanyWriteOperations, CompanyWriteOperations>();
+            services.AddScoped<ICompanyService, CompanyService>();
+
+            services.AddScoped<IGroupGetOperations, GroupGetOperations>();
+            services.AddScoped<IGroupWriteOperations, GroupWriteOperations>();
+            services.AddScoped<IGroupService, GroupService>();
+
+            
+            services.AddTransient<IUserIdentity, UserIdentity>();
+            services.AddTransient<IMongoIdentity, UserIdentity>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -100,9 +129,18 @@ services.Configure<ApiBehaviorOptions>(options =>
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MfPulse.Api v1"));
             }
             
+            app.UseMiddleware<ExceptionMiddleware>();
+            
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(_ => true)
+                .AllowCredentials()); 
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

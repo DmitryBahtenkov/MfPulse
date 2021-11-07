@@ -55,7 +55,11 @@ namespace MfPulse.Mongo.Operations.Implementations
             UpdateDefinition<TDocument> update)
         {
             return await ExecuteOperation(
-                async x => await Collection.FindOneAndUpdateAsync<TDocument>(x, update),
+                async x =>
+                {
+                    await Collection.UpdateOneAsync(filter, update);
+                    return await (await Collection.FindAsync(filter)).FirstOrDefaultAsync();
+                },
                 filter);
         }
         

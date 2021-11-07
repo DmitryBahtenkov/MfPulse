@@ -8,4 +8,9 @@
       <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Contract" />
+      <Folder Include="Impl" />
+    </ItemGroup>
+
 </Project>
