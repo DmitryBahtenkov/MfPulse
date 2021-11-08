@@ -3,13 +3,15 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-
-    <ItemGroup>
-        <Folder Include="Implementations\Questionaires" />
-    </ItemGroup>
     
     <ItemGroup>
+      <ProjectReference Include="..\MfPulse.Auth\MfPulse.Auth.csproj" />
       <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Implementations\Ratings\Events" />
+      <Folder Include="Implementations\Questionaires" />
     </ItemGroup>
 
 </Project>
