@@ -10,6 +10,7 @@ using MfPulse.Auth.Contract.Companies.Operations;
 using MfPulse.Auth.Contract.Companies.Services;
 using MfPulse.Auth.Contract.Groups.Operations;
 using MfPulse.Auth.Contract.Groups.Services;
+using MfPulse.Auth.Contract.Users.Database.Models;
 using MfPulse.Auth.Contract.Users.Database.Operations;
 using MfPulse.Auth.Contract.Users.Services;
 using MfPulse.Auth.Implementation.Companies.Events;
@@ -121,6 +122,7 @@ namespace MfPulse.Api
             
             services.AddTransient<IUserIdentity, UserIdentity>();
             services.AddTransient<IMongoIdentity, UserIdentity>();
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -153,6 +155,13 @@ namespace MfPulse.Api
             }
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            var events = EventStorage<UserDocument>.GetEventBuilders(app.ApplicationServices);
+
+            foreach (var e in events)
+            {
+                e.BuildEvents();
+            }
         }
     }
 }

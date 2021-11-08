@@ -6,6 +6,7 @@
     
     <ItemGroup>
       <ProjectReference Include="..\MfPulse.Auth\MfPulse.Auth.csproj" />
+      <ProjectReference Include="..\MfPulse.EventBus\MfPulse.EventBus.csproj" />
       <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
     </ItemGroup>
 
