@@ -3,7 +3,7 @@ using MfPulse.Mongo.Document;
 
 namespace MfPulse.Assessment.Contract.Questionaires.Models
 {
-    public record QuestionaireDocument() : IDocumentWithCompanyId
+    public record QuestionaireDocument : IDocumentWithCompanyId
     {
         public string Id { get; set; }
         public bool IsArchived { get; set; }
