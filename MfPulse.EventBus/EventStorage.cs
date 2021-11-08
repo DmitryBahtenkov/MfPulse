@@ -9,14 +9,14 @@ namespace MfPulse.EventBus
 {
     public class EventStorage<TDocument> where TDocument : IDocument
     {
-        public event Func<DocumentCreatedEvent<TDocument>, Task> DocumentChangedEvent;
+        public event Func<DocumentCreatedEvent<TDocument>, Task> DocumentCreatedEvent;
         public event Func<DocumentDeletedEvent<TDocument>, Task> DocumentDeletedEvent;
 
         internal virtual async Task OnDocumentCreatedEvent(DocumentCreatedEvent<TDocument> arg)
         {
-            if (DocumentChangedEvent is not null)
+            if (DocumentCreatedEvent is not null)
             {
-                await DocumentChangedEvent.Invoke(arg);
+                await DocumentCreatedEvent.Invoke(arg);
             }
         }
         
@@ -33,7 +33,7 @@ namespace MfPulse.EventBus
             var types = AppDomain.CurrentDomain.
                 GetAssemblies()
                 .SelectMany(x => x.GetTypes())
-                .Where(x=>x.Assembly?.FullName?.Contains("Testing") == true)
+                .Where(x=>x.Assembly?.FullName?.Contains("MfPulse") == true)
                 .Where(x => x.IsClass && typeof(IEventBuilder).IsAssignableFrom(x));
 
             return types.Select(x=> (IEventBuilder)Activator.CreateInstance(x, serviceProvider.GetService(typeof(EventStorage<TDocument>))));

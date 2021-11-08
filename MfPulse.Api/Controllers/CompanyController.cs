@@ -11,7 +11,7 @@ namespace MfPulse.Api.Controllers
 {
     [Route("api/v1/company")]
     [ApiController]
-    [ForAdmins]
+    //[ForAdmins]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
@@ -25,15 +25,15 @@ namespace MfPulse.Api.Controllers
         public async Task<CompanyResponse> Create([FromBody] ChangeCompanyRequest request)
             => await _companyService.Create(request);
         
-        [HttpPut("{id}")]
-        public async Task<CompanyResponse> Update(string id, [FromBody] ChangeCompanyRequest request)
-            => await _companyService.Update(id, request);
+        [HttpPut]
+        public async Task<CompanyResponse> Update([FromBody] ChangeCompanyRequest request)
+            => await _companyService.Update(request);
 
         [HttpGet("all")]
         [Authorize(Roles = RoleTags.Super)]
         public async Task<AllCompaniesResponse> All()
             => await _companyService.All();
-
+    
         [HttpDelete("{id}")]
         [Authorize(Roles = RoleTags.Super)]
         public async Task Delete(string id)

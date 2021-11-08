@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MfPulse.CrossCutting\MfPulse.CrossCutting.csproj" />
+      <ProjectReference Include="..\MfPulse.EventBus\MfPulse.EventBus.csproj" />
       <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
     </ItemGroup>
 
@@ -18,7 +19,6 @@
     <ItemGroup>
       <Folder Include="Contract\Companies" />
       <Folder Include="Contract\Users" />
-      <Folder Include="Implementation\Companies" />
       <Folder Include="Implementation\Users" />
     </ItemGroup>
 
