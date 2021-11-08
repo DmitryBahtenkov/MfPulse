@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using MfPulse.EventBus;
 using MfPulse.Api.Controllers;
 using MfPulse.Api.Middleware;
+using MfPulse.Auth.Contract.Companies.Models;
 using MfPulse.Auth.Contract.Companies.Operations;
 using MfPulse.Auth.Contract.Companies.Services;
 using MfPulse.Auth.Contract.Groups.Operations;
 using MfPulse.Auth.Contract.Groups.Services;
 using MfPulse.Auth.Contract.Users.Database.Operations;
 using MfPulse.Auth.Contract.Users.Services;
+using MfPulse.Auth.Implementation.Companies.Events;
 using MfPulse.Auth.Implementation.Companies.Operations;
 using MfPulse.Auth.Implementation.Companies.Services;
 using MfPulse.Auth.Implementation.Groups.Operations;
@@ -110,6 +112,7 @@ namespace MfPulse.Api
             services.AddScoped<ICompanyGetOperations, CompanyGetOperations>();
             services.AddScoped<ICompanyWriteOperations, CompanyWriteOperations>();
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<CompanyCreatedEventHandler>();
 
             services.AddScoped<IGroupGetOperations, GroupGetOperations>();
             services.AddScoped<IGroupWriteOperations, GroupWriteOperations>();
@@ -142,6 +145,13 @@ namespace MfPulse.Api
                 .SetIsOriginAllowed(_ => true)
                 .AllowCredentials()); 
 
+            var builders = EventStorage<CompanyDocument>.GetEventBuilders(app.ApplicationServices);
+            
+            foreach (var eventBuilder in builders)
+            {
+                eventBuilder.BuildEvents();
+            }
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

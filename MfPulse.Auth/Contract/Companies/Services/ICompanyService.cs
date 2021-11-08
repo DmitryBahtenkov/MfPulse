@@ -7,7 +7,7 @@ namespace MfPulse.Auth.Contract.Companies.Services
     public interface ICompanyService
     {
         public Task<CompanyResponse> Create(ChangeCompanyRequest request);
-        public Task<CompanyResponse> Update(string id, ChangeCompanyRequest request);
+        public Task<CompanyResponse> Update(ChangeCompanyRequest request);
         public Task<AllCompaniesResponse> All();
         public Task Delete(string id);
     }

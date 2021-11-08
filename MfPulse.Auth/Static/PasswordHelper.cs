@@ -30,7 +30,7 @@ namespace MfPulse.Auth.Static
             var saltedPass = password + userDocument.Password?.Salt;
             var hash = Convert.ToBase64String(md.ComputeHash(Encoding.Unicode.GetBytes(saltedPass)));
 
-            return hash == saltedPass;
+            return hash == userDocument.Password?.Hash;
         }
     }
 }
