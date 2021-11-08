@@ -15,7 +15,7 @@ namespace MfPulse.Assessment.Implementations.Ratings.Events
 
         public void BuildEvents()
         {
-            _eventStorage.DocumentChangedEvent += async @event =>
+            _eventStorage.DocumentCreatedEvent += async @event =>
                 await @event.ServiceProvider
                     .GetService<CreatedUserEventHandler>()
                     .OnCreate(@event);
