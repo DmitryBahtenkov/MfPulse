@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using MfPulse.Auth.Contract;
 using MfPulse.Auth.Contract.Companies.Operations;
@@ -12,6 +13,8 @@ using MfPulse.Auth.Contract.Users.Services;
 using MfPulse.Auth.Static;
 using MfPulse.Auth.Static.Rights;
 using MfPulse.CrossCutting.Exceptions;
+using MfPulse.EventBus;
+using MfPulse.EventBus.Events;
 using MfPulse.Mongo.Helpers;
 
 namespace MfPulse.Auth.Implementation.Users.Services
@@ -22,15 +25,21 @@ namespace MfPulse.Auth.Implementation.Users.Services
         private readonly IUserWriteOperations _userWriteOperations;
         private readonly IGroupGetOperations _groupGetOperations;
         private readonly IUserIdentity _userIdentity;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly EventInvoker<UserDocument> _eventInvoker;
 
         public UserService(IUserGetOperations userGetOperations,
             IUserWriteOperations userWriteOperations,
-            IGroupGetOperations groupGetOperations, IUserIdentity userIdentity)
+            IGroupGetOperations groupGetOperations, IUserIdentity userIdentity, 
+            IServiceProvider serviceProvider, 
+            EventInvoker<UserDocument> eventInvoker)
         {
             _userGetOperations = userGetOperations;
             _userWriteOperations = userWriteOperations;
             _groupGetOperations = groupGetOperations;
             _userIdentity = userIdentity;
+            _serviceProvider = serviceProvider;
+            _eventInvoker = eventInvoker;
         }
 
         public async Task<UserResponse> Create(CreateUserRequest request)
@@ -53,6 +62,11 @@ namespace MfPulse.Auth.Implementation.Users.Services
             };
 
             var user = await _userWriteOperations.Insert(doc);
+
+            await _eventInvoker.OnDocumentCreated(
+                new DocumentCreatedEvent<UserDocument>(_serviceProvider, user)
+                );
+            
             return FromDocument(user);
         }
         

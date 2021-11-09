@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 using MfPulse.EventBus;
 using MfPulse.Api.Controllers;
 using MfPulse.Api.Middleware;
+using MfPulse.Assessment.Contract.Ratings.Operations;
+using MfPulse.Assessment.Contract.Ratings.Services;
+using MfPulse.Assessment.Implementations.Ratings.Events;
+using MfPulse.Assessment.Implementations.Ratings.Operations;
+using MfPulse.Assessment.Implementations.Ratings.Services;
 using MfPulse.Auth.Contract.Companies.Models;
 using MfPulse.Auth.Contract.Companies.Operations;
 using MfPulse.Auth.Contract.Companies.Services;
@@ -21,6 +26,7 @@ using MfPulse.Auth.Implementation.Groups.Services;
 using MfPulse.Auth.Implementation.Users.Database;
 using MfPulse.Auth.Implementation.Users.Services;
 using MfPulse.Auth.Static;
+using MfPulse.Mongo.Document;
 using MfPulse.Mongo.Operations;
 using MfPulse.Mongo.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -122,7 +128,11 @@ namespace MfPulse.Api
             
             services.AddTransient<IUserIdentity, UserIdentity>();
             services.AddTransient<IMongoIdentity, UserIdentity>();
-            
+
+            services.AddScoped<IRatingGetOperations, RatingGetOperations>();
+            services.AddScoped<IRatingWriteOperations, RatingWriteOperations>();
+            services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<CreatedUserEventHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -147,7 +157,8 @@ namespace MfPulse.Api
                 .SetIsOriginAllowed(_ => true)
                 .AllowCredentials()); 
 
-            var builders = EventStorage<CompanyDocument>.GetEventBuilders(app.ApplicationServices);
+            // билдим события для всех документов
+            var builders = EventStorage<IDocument>.GetEventBuilders(app.ApplicationServices);
             
             foreach (var eventBuilder in builders)
             {
@@ -155,13 +166,6 @@ namespace MfPulse.Api
             }
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            var events = EventStorage<UserDocument>.GetEventBuilders(app.ApplicationServices);
-
-            foreach (var e in events)
-            {
-                e.BuildEvents();
-            }
         }
     }
 }

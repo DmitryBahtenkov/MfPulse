@@ -36,7 +36,13 @@ namespace MfPulse.EventBus
                 .Where(x=>x.Assembly?.FullName?.Contains("MfPulse") == true)
                 .Where(x => x.IsClass && typeof(IEventBuilder).IsAssignableFrom(x));
 
-            return types.Select(x=> (IEventBuilder)Activator.CreateInstance(x, serviceProvider.GetService(typeof(EventStorage<TDocument>))));
+            return types.Select(x=>
+            {
+                var constructor = x.GetConstructors().First();
+                return (IEventBuilder) Activator.CreateInstance(x,
+                        serviceProvider
+                            .GetService(constructor.GetParameters().First().ParameterType));
+            });
         }
     }
 }

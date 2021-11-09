@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MfPulse.Assessment\MfPulse.Assessment.csproj" />
       <ProjectReference Include="..\MfPulse.Auth\MfPulse.Auth.csproj" />
     </ItemGroup>
 
