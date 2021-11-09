@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Implementations\Ratings\Events" />
       <Folder Include="Implementations\Questionaires" />
     </ItemGroup>
 
