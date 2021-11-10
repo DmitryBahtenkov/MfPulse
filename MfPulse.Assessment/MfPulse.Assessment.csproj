@@ -10,8 +10,4 @@
       <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Implementations\Questionaires" />
-    </ItemGroup>
-
 </Project>

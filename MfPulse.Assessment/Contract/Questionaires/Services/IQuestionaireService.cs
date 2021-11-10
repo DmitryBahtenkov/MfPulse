@@ -11,6 +11,6 @@ namespace MfPulse.Assessment.Contract.Questionaires.Services
         public Task<AllQuestionairesResponse> All();
         public Task Delete(string id);
         public Task<QuestionaireResponse> Get(string id);
-        public Task<QuestionaireResponse> ByGroup(string groupId);
+        public Task<AllQuestionairesResponse> ByGroup(string groupId);
     }
 }
