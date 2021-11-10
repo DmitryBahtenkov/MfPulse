@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MfPulse.Auth\MfPulse.Auth.csproj" />
+      <ProjectReference Include="..\MfPulse.EventBus\MfPulse.EventBus.csproj" />
+      <ProjectReference Include="..\MfPulse.Mongo\MfPulse.Mongo.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Implementations\Questionaires" />
+    </ItemGroup>
+
+</Project>
